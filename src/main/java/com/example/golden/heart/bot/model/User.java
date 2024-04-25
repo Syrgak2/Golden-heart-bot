@@ -14,6 +14,7 @@ public class User {
     private Long id;
 
     private Long chtId;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

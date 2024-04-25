@@ -25,8 +25,7 @@ public class Pet {
     @JsonIgnore
     private User owner;
 
-    @OneToOne
-    @JoinColumn(name = "photo_id")
+    @OneToOne(mappedBy = "pet")
     @JsonIgnore
     private Photo photo;
 
