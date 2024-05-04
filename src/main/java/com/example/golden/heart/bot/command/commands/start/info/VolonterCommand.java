@@ -21,9 +21,7 @@ public class VolonterCommand implements com.example.golden.heart.bot.command.Com
         Map<String,String> map = new HashMap<>();
         map.put("Назад", "/catAndDog");
 
-        /**
-         *  нужен Метод по вызову волонтёра, нужна доработка
-         */
+
 
         String message = "Уже позвал волонтёра. Скоро будет";
         telegramBotSender.sendMessage(message, getChatId(update), telegramBotSender.setButtons(map));

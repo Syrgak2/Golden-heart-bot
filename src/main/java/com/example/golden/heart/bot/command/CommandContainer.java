@@ -63,7 +63,8 @@ public class CommandContainer{
            commandMap.put(DOCUMENTATION.getCommand(), new DocumentationCommand(telegramBotSender));
            commandMap.put(RECOMMENDATION.getCommand(), new RecommendationCommand(telegramBotSender));
               commandMap.put(TRANSPORTATION.getCommand(), new TransportationCommand(telegramBotSender));
-              commandMap.put(HOME_IMPROVEMENT_YOUNG.getCommand(), new HomeImprovementYoungCommand(telegramBotSender, userService));
+              commandMap.put(HOME_IMPROVEMENT_CAT.getCommand(), new HomeImprovementYoungCommand(telegramBotSender, userService));
+              commandMap.put(HOME_IMPROVEMENT_DOG.getCommand(), new HomeImprovementYoungCommand(telegramBotSender, userService));
               commandMap.put(HOME_IMPROVEMENT_FOR_DISABLED.getCommand(), new HomeImprovementForDisabledComand(telegramBotSender));
               commandMap.put(HOME_IMPROVEMENT_ADULT.getCommand(), new HomeImprovementAdultCommand(telegramBotSender));
            commandMap.put(DOG_BEHAVIORIST_ADVICE.getCommand(), new DogBehavioristCommand(telegramBotSender, dogBehavioristService));

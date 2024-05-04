@@ -3,6 +3,7 @@ package com.example.golden.heart.bot.service;
 import com.example.golden.heart.bot.command.CommandName;
 import com.example.golden.heart.bot.model.MessageText;
 import com.example.golden.heart.bot.repository.MessageTextRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +66,7 @@ public class MessageTextService {
         return messageTextRepository.findByCommandName(commandName).orElse(null);
     }
 
+    @Transactional
     public Boolean removeByCommandName(CommandName commandName) {
         if (findByCommandName(commandName) == null) {
             return false;

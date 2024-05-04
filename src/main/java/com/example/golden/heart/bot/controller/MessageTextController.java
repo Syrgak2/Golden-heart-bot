@@ -57,9 +57,9 @@ public class MessageTextController {
         return ResponseEntity.ok(messageText);
     }
 
-    @GetMapping
-    public ResponseEntity<MessageText> deleteMessageText(@RequestParam(required = false) Long id,
-                                                         @RequestParam(required = false) CommandName commandName) {
+    @DeleteMapping
+    public ResponseEntity<Boolean> deleteMessageText(@RequestParam(required = false) Long id,
+                                                     @RequestParam(required = false) CommandName commandName) {
         Boolean bollen = null;
 
         if (id != null) {
@@ -70,10 +70,14 @@ public class MessageTextController {
             bollen = messageTextService.removeByCommandName(commandName);
         }
 
+        if (commandName == null && id == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
         if (bollen) {
             return ResponseEntity.notFound().build();
         }
 
-
+        return ResponseEntity.ok(true);
     }
 }
