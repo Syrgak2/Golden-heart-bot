@@ -4,10 +4,12 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.request.InlineKeyboardButton;
 import com.pengrad.telegrambot.model.request.InlineKeyboardMarkup;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.request.SendPhoto;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.Map;
 
 @Service
@@ -28,5 +30,9 @@ public class TelegramBotSender {
             markup.addRow(new InlineKeyboardButton(entry.getKey()).callbackData(entry.getValue()));
         }
         return markup;
+    }
+
+    public void sendPhoto(Long chatID, File file) {
+        SendResponse response = telegramBot.execute(new SendPhoto(chatID, file));
     }
 }
