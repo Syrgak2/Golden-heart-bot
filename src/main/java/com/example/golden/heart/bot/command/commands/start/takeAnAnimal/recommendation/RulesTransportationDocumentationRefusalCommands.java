@@ -1,4 +1,4 @@
-package com.example.golden.heart.bot.command.commands.start.startInfo;
+package com.example.golden.heart.bot.command.commands.start.takeAnAnimal.recommendation;
 
 import com.example.golden.heart.bot.command.Command;
 import com.example.golden.heart.bot.command.CommandName;
@@ -14,42 +14,44 @@ import static com.example.golden.heart.bot.command.CommandName.*;
 import static com.example.golden.heart.bot.command.commands.CommandUtils.getChatId;
 import static com.example.golden.heart.bot.command.commands.CommandUtils.getData;
 
-/**
-  * В этом классе содержится обработка всех команд, которые дают информацию о приюте.
- */
-public class AnimalShelterInfoCommands implements Command {
+public class RulesTransportationDocumentationRefusalCommands implements Command {
 
-    private String message;
-
-    Map<String, String> buttons;
-
+    private String message = " ";
+    private Map<String, String> buttons;
     private TelegramBotSender telegramBotSender;
-
     private MessageTextService messageTextService;
 
-    public AnimalShelterInfoCommands(TelegramBotSender telegramBotSender, MessageTextService messageTextService) {
+    public RulesTransportationDocumentationRefusalCommands(TelegramBotSender telegramBotSender, MessageTextService messageTextService) {
         this.telegramBotSender = telegramBotSender;
         this.messageTextService = messageTextService;
     }
 
     @Override
     public void execute(Update update) {
-        if (getData(update).equals(SAFETY_PRECAUTIONS.getCommand())) {
-            collectMessage(SAFETY_PRECAUTIONS);
+        if (getData(update).equals(DOCUMENTATION.getCommand())) {
+            collectMessage(DOCUMENTATION);
         }
-        if (getData(update).equals(SECURITY.getCommand())) {
-            collectMessage(SECURITY);
+
+        if (getData(update).equals(TRANSPORTATION.getCommand())) {
+            collectMessage(TRANSPORTATION);
+        }
+
+        if (getData(update).equals(RULES.getCommand())) {
+            collectMessage(RULES);
+        }
+        if (getData(update).equals(REASONS_FOR_REFUSAL.getCommand())) {
+            collectMessage(REASONS_FOR_REFUSAL);
         }
 
         telegramBotSender.sendMessage(message, getChatId(update), telegramBotSender.setButtons(buttons));
+
     }
 
     private void collectMessage(CommandName commandName) {
-        MessageText messageText =  messageTextService.findByCommandName(commandName);
+        MessageText messageText = messageTextService.findByCommandName(commandName);
         message = messageText.getText();
 
         buttons = new LinkedHashMap<>();
-        buttons.put("Назад", START_INFO.getCommand());
-
+        buttons.put("назад", TAKE_AN_ANIMAL.getCommand());
     }
 }

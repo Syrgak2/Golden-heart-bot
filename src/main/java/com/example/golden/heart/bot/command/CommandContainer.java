@@ -4,7 +4,7 @@ import com.example.golden.heart.bot.command.commands.start.*;
 import com.example.golden.heart.bot.command.commands.start.info.ContactDetailsCommand;
 import com.example.golden.heart.bot.command.commands.start.info.InfoCommand;
 import com.example.golden.heart.bot.command.commands.start.info.UnknownCommand;
-import com.example.golden.heart.bot.command.commands.start.info.VolonterCommand;
+import com.example.golden.heart.bot.command.commands.start.info.VolunteerCommand;
 import com.example.golden.heart.bot.command.commands.start.report.ReportCommand;
 import com.example.golden.heart.bot.command.commands.start.startInfo.*;
 import com.example.golden.heart.bot.command.commands.start.takeAnAnimal.*;
@@ -66,23 +66,27 @@ public class CommandContainer{
            commandMap.put(SAFETY_PRECAUTIONS.getCommand(), new AnimalShelterInfoCommands(telegramBotSender, messageTextService));
 
         commandMap.put(TAKE_AN_ANIMAL.getCommand(), new TakeAnAnimalCommand(telegramBotSender, userService));
-           commandMap.put(RULES.getCommand(), new RulesCommand(telegramBotSender));
-           commandMap.put(DOCUMENTATION.getCommand(), new DocumentationCommand(telegramBotSender));
+
+           commandMap.put(RULES.getCommand(), new RulesTransportationDocumentationRefusalCommands(telegramBotSender, messageTextService));
+           commandMap.put(DOCUMENTATION.getCommand(), new RulesTransportationDocumentationRefusalCommands(telegramBotSender, messageTextService));
+           commandMap.put(REASONS_FOR_REFUSAL.getCommand(), new RulesTransportationDocumentationRefusalCommands(telegramBotSender, messageTextService));
+           commandMap.put(TRANSPORTATION.getCommand(), new RulesTransportationDocumentationRefusalCommands(telegramBotSender, messageTextService));
+
            commandMap.put(RECOMMENDATION.getCommand(), new RecommendationCommand(telegramBotSender));
-              commandMap.put(TRANSPORTATION.getCommand(), new TransportationCommand(telegramBotSender));
-              commandMap.put(HOME_IMPROVEMENT_CAT.getCommand(), new HomeImprovementYoungCommand(telegramBotSender, userService));
-              commandMap.put(HOME_IMPROVEMENT_DOG.getCommand(), new HomeImprovementYoungCommand(telegramBotSender, userService));
-              commandMap.put(HOME_IMPROVEMENT_FOR_DISABLED.getCommand(), new HomeImprovementForDisabledComand(telegramBotSender));
-              commandMap.put(HOME_IMPROVEMENT_ADULT.getCommand(), new HomeImprovementAdultCommand(telegramBotSender));
-           commandMap.put(DOG_BEHAVIORIST_ADVICE.getCommand(), new DogBehavioristCommand(telegramBotSender, dogBehavioristService));
-           commandMap.put(GET_DOG_BEHAVIORIST.getCommand(), new DogBehavioristCommand(telegramBotSender, dogBehavioristService));
-           commandMap.put(REASONS_FOR_REFUSAL.getCommand(), new ReasonsForRefusalCommand(telegramBotSender));
+
+              commandMap.put(HOME_IMPROVEMENT_YOUNG.getCommand(), new HomeImprovementCommands(telegramBotSender,messageTextService, userService));
+              commandMap.put(HOME_IMPROVEMENT_FOR_DISABLED.getCommand(), new HomeImprovementCommands(telegramBotSender, messageTextService, userService));
+              commandMap.put(HOME_IMPROVEMENT_ADULT.getCommand(), new HomeImprovementCommands(telegramBotSender, messageTextService, userService));
+
+           commandMap.put(DOG_BEHAVIORIST_ADVICE.getCommand(), new DogBehavioristCommand(telegramBotSender, dogBehavioristService, messageTextService));
+           commandMap.put(GET_DOG_BEHAVIORIST.getCommand(), new DogBehavioristCommand(telegramBotSender, dogBehavioristService, messageTextService));
+
 
         commandMap.put(REPORT.getCommand(), new ReportCommand(telegramBotSender));
 
         commandMap.put(INFO.getCommand(), new InfoCommand(telegramBotSender));
         commandMap.put(CONTACT_DETAILS.getCommand(), new ContactDetailsCommand(telegramBotSender));
-        commandMap.put(VOLUNTEER.getCommand(), new VolonterCommand(telegramBotSender));
+        commandMap.put(VOLUNTEER.getCommand(), new VolunteerCommand(telegramBotSender, userService));
 
         return commandMap;
     }

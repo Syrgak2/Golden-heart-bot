@@ -19,14 +19,21 @@ public class MessageTextController {
         return ResponseEntity.ok(messageTextService.save(messageText));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<MessageText> editeMessageText(@PathVariable Long id,
-                                                 @RequestBody MessageText messageText) {
+    @PutMapping()
+    public ResponseEntity<MessageText> editeMessageText(@RequestParam(required = false) Long id,
+                                                        @RequestParam(required = false) CommandName commandName,
+                                                 @RequestBody String messageText) {
+
         MessageText foundMessageText = null;
-        try {
+        if (id != null && commandName == null) {
             foundMessageText = messageTextService.edite(id, messageText);
-        } catch (IllegalArgumentException e) {
-            ResponseEntity.badRequest().build();
+        }
+        if (commandName != null && id == null) {
+            foundMessageText = messageTextService.edite(commandName, messageText);
+        }
+
+        if (commandName == null & id == null || commandName != null && id != null) {
+            return ResponseEntity.badRequest().build();
         }
         if (foundMessageText == null) {
             return ResponseEntity.notFound().build();
@@ -39,14 +46,14 @@ public class MessageTextController {
     public ResponseEntity<MessageText> getMessageText(@RequestParam(required = false) Long id,
                                                       @RequestParam(required = false) CommandName commandName) {
         MessageText messageText = null;
-        if (id != null) {
+        if (id != null && commandName == null) {
             messageText = messageTextService.findById(id);
         }
-        if (commandName != null) {
+        if (commandName != null && id == null) {
             messageText = messageTextService.findByCommandName(commandName);
         }
 
-        if (id == null && commandName == null) {
+        if (id == null && commandName == null || id != null && commandName != null) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -60,7 +67,7 @@ public class MessageTextController {
     @DeleteMapping
     public ResponseEntity<Boolean> deleteMessageText(@RequestParam(required = false) Long id,
                                                      @RequestParam(required = false) CommandName commandName) {
-        Boolean bollen = null;
+        Boolean bollen = false;
 
         if (id != null) {
             bollen = messageTextService.remove(id);

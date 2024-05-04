@@ -39,13 +39,18 @@ public class MessageTextService {
      * @param messageText текст для хронение.
      * @return сохранную messageText
      */
-    public MessageText edite(Long id, MessageText messageText) {
+    public MessageText edite(Long id, String messageText) {
         return messageTextRepository.findById(id)
                 .map(foundMessageText -> {
-                    if (foundMessageText.getCommandName() != messageText.getCommandName()) {
-                        throw new IllegalArgumentException();
-                    }
-                    foundMessageText.setText(messageText.getText());
+                    foundMessageText.setText(messageText);
+                    return messageTextRepository.save(foundMessageText);
+                }).orElse(null);
+    }
+
+    public MessageText edite(CommandName commandName, String messageText) {
+        return messageTextRepository.findByCommandName(commandName)
+                .map(foundMessageText -> {
+                    foundMessageText.setText(messageText);
                     return messageTextRepository.save(foundMessageText);
                 }).orElse(null);
     }
