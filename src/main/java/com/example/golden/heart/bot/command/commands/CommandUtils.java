@@ -1,6 +1,6 @@
 package com.example.golden.heart.bot.command.commands;
 
-import com.example.golden.heart.bot.exceptions.UnknownUpdateException;
+import com.example.golden.heart.bot.exception.UnknownUpdateException;
 import com.pengrad.telegrambot.model.Update;
 
 /**

@@ -1,7 +1,7 @@
 package com.example.golden.heart.bot.service;
 
 import com.example.golden.heart.bot.exception.VolunteerAlreadyAppointedException;
-import com.example.golden.heart.bot.exceptions.NullUserException;
+import com.example.golden.heart.bot.exception.NullUserException;
 import com.example.golden.heart.bot.model.Role;
 import com.example.golden.heart.bot.model.User;
 import com.example.golden.heart.bot.repository.UserRepository;

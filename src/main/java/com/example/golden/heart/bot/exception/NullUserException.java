@@ -1,4 +1,4 @@
-package com.example.golden.heart.bot.exceptions;
+package com.example.golden.heart.bot.exception;
 
 public class NullUserException extends RuntimeException {
     public NullUserException() {
