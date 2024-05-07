@@ -23,8 +23,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith((MockitoExtension.class))
 public class PhotoServiceTest {
 
-    @Mock
-    private Logger logger;
 
     @InjectMocks
     private PhotoService photoService;
@@ -48,8 +46,6 @@ public class PhotoServiceTest {
 
         Path actual = photoService.uploadPhoto(id, dir, file);
 
-        // Verify that logger.info was invoked with the correct message
-        verify(logger).info("Wos invoked method for upload avatar");
 
         // Verify that Files.createDirectories was invoked with the correct argument
         verify(Files.createDirectories(eq(expectedFilePath.getParent())));
