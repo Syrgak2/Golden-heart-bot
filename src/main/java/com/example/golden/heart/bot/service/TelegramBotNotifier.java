@@ -2,13 +2,11 @@ package com.example.golden.heart.bot.service;
 
 import com.example.golden.heart.bot.model.Pet;
 import com.example.golden.heart.bot.model.PetReport;
-import com.example.golden.heart.bot.model.Role;
+import com.example.golden.heart.bot.model.enums.Role;
 import com.example.golden.heart.bot.model.User;
 import com.example.golden.heart.bot.repository.PetReportRepository;
 import com.example.golden.heart.bot.repository.PetRepository;
 import com.example.golden.heart.bot.repository.UserRepository;
-import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.request.SendMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,31 +19,32 @@ import java.util.List;
 @EnableScheduling
 public class TelegramBotNotifier {
     @Autowired
-    TelegramBot telegramBot;
+    TelegramBotSender telegramBotSender;
     @Autowired
     PetReportRepository petReportRepository;
     @Autowired
     PetRepository petRepository;
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @Scheduled(cron = "0 0 21 * * *")
     public void checkReports() {
+        LocalDate date = LocalDate.now();
         List<Pet> pets = petRepository.findAll().stream()
                 .filter(pet -> pet.getOwner() != null)
                 .toList();
         pets.forEach(pet -> {
-            List<PetReport> reports = petReportRepository.findAllByDateAndPet(LocalDate.now(), pet);
-            if (reports.isEmpty()) {
+            List<PetReport> reports = petReportRepository.findAllByDateAndPet(date, pet);
+            if (reports.isEmpty() && pet.getOwner().getRole() != Role.VOLUNTEER) {
                 User owner = pet.getOwner();
-                telegramBot.execute(new SendMessage(pet.getOwner().getChatId(), "Сегодня от Вас не поступил отчет о состоянии питомца.\n" +
-                        "\t Просьба срочно отправить"));
-                reports = petReportRepository.findAllByDateAndPet(LocalDate.now().minusDays(2), pet);
+                telegramBotSender.sendMessage("Сегодня от Вас не поступил отчет о состоянии питомца.\n" +
+                        "\t Просьба срочно отправить", pet.getOwner().getChatId());
+                reports = petReportRepository.findAllByDateAndPet(date.minusDays(2), pet);
                 if (reports.isEmpty()) {
-                    User user = userRepository.findByRole(Role.VOLUNTEER).iterator().next();
+                    User user = userService.findVolunteer();
                     if (user != null)
-                        telegramBot.execute(new SendMessage(user.getChatId(), "Владелец питомца " +
-                                pet.getNick() + " с username " + owner.getUserName() + " не отправлял отчет уже более 2 дней"));
+                        telegramBotSender.sendMessage("Владелец питомца " +
+                                pet.getNick() + " с username " + owner.getUserName() + " не отправлял отчет уже более 2 дней", user.getChatId());
                 }
             }
         });

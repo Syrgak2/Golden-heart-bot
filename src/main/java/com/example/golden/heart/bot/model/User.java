@@ -1,5 +1,7 @@
 package com.example.golden.heart.bot.model;
 
+import com.example.golden.heart.bot.command.enums.ReportState;
+import com.example.golden.heart.bot.model.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -27,7 +29,6 @@ public class User {
 
     @OneToOne
     @JoinColumn(name = "pet_id")
-    @JsonIgnore
     private Pet pet;
 
     public User(Long chatId, String phone) {
