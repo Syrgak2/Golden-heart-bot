@@ -14,5 +14,3 @@ class TelegramBotSenderTest {
     void setButns() {
     }
 }
-
-// werify - mockito
